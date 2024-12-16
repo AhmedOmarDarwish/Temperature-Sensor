@@ -8,18 +8,23 @@
             //Display
             //Alarm
 
+            Broker broker = new Broker();
+            Sensor sensor = new Sensor(broker); //Publisher
 
-            Sensor sensor = new Sensor();
+            //Subscribers
             Display display = new Display();
             Alarm alarm = new Alarm(50);
+
             //5.Subscribition
-            sensor.SensorChanged += display.DisplayTemp;
-            sensor.SensorChanged += alarm.FireAlarm;
+            display.Subscribe(broker);
+            alarm.Subscribe(broker);
+            //sensor.SensorChanged += display.DisplayTemp;
+            //sensor.SensorChanged += alarm.FireAlarm;
             while (true)
             {
                 Console.WriteLine("Welcome to the Temperature System");
                 Console.WriteLine("1. Set the Temperature");
-                Console.WriteLine("2. Set the Alarm Value (Default 20)");
+                Console.WriteLine($"2. Set the Alarm Value (Default {alarm.AlarmValue})");
                 Console.WriteLine("3. Exit");
 
                 string userInput = Console.ReadLine();

@@ -8,16 +8,17 @@ namespace Temperature_Sensor
 {
     internal class Sensor
     {
-		//1.Declare Event
-		public event EventHandler<TempArgs> SensorChanged;
+		private Broker _broker;
+		public Sensor(Broker broker) { 
+		_broker = broker;
+		}
 		private double _currentTemp;
 
 		public double ChangeTemp
         {
 			get { return _currentTemp; }
 			set { _currentTemp = value;
-                //2.Invoke Event and send value
-                SensorChanged.Invoke(this,new TempArgs(value));
+				_broker.Publish("TemperatureChanged",new TempArgs(value));
 			}
 		}
 

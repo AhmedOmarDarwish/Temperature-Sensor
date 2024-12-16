@@ -21,7 +21,12 @@ namespace Temperature_Sensor
 			set { _alarmValue = value; }
 		}
 
-		public void FireAlarm(object? obj, TempArgs args)
+        public void Subscribe(Broker broker)
+        {
+            broker.Subscribe("TemperatureChanged", FireAlarm);
+        }
+
+        public void FireAlarm(TempArgs args)
 		{
 			if (args.getTemp > AlarmValue)
 			{
